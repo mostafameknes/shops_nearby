@@ -1,0 +1,55 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}
+    Add a new shop
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <h3>Add a new shop.</h3>
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div class="col_half">
+            <label for="register-form-name">Name :</label>
+            {{ form_widget(form.Name, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.Name) }}
+        </div>
+
+        <div class="col_half col_last">
+            <label for="register-form-email">Address :</label>
+            {{ form_widget(form.Address, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.Address) }}
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="col_half">
+            <label>Latitude :</label>
+            {{ form_widget(form.Latitude, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.Latitude) }}
+        </div>
+        <div class="col_half">
+            <label>Longitude :</label>
+            {{ form_widget(form.Longitude, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.Longitude) }}
+        </div>
+
+        <div class="col_half col_last">
+            <label for="register-form-phone">Photo :</label>
+            {{ form_widget(form.file, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.file) }}
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="clear"></div>
+        <div class="col_full nobottommargin">
+            <button value="register">Save
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

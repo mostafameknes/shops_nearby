@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}Welcome!
+            {% endblock %}
+        </title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <menu>
+            <ul>
+                <li><a class=""href="{{ path('admin_user_list') }}">Users Management</a></li>
+                <li><a class=""href="{{ path('admin_shops_list') }}">Shop Management</a></li>
+            </ul>
+        </menu>
+
+        {% block body %}{% endblock %}
+
+        <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

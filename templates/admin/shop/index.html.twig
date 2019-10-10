@@ -1,0 +1,53 @@
+{% extends 'admin.html.twig' %}
+{% block title %}
+    Shops list
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path('admin_shops_new') }}">
+        Add a new shop
+    </a>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th width="90"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in shops %}
+                <tr>
+                    <td>{{ shop.id }}</td>
+                    <td>{{ shop.Name }}</td>
+                    <td>{{ shop.Address }}</td>
+                    <td>{{ shop.Longitude }}</td>
+                    <td>{{ shop.Latitude }}</td>
+                    <td>
+                        <a href="{{ path('admin_shops_edit', { 'id': shop.id }) }}">
+                            Edit
+                        </a>
+                        <a href="{{ path('admin_shops_delete', { 'id': shop.id }) }}" class="deleteitem">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.deleteitem').click(function () {
+            var id = $(this).attr('rel');
+            var r = confirm("Are you sure to delete this item !");
+            if (r == false) {
+                return false
+            }
+            return true;
+        })
+    </script>
+{% endblock %}

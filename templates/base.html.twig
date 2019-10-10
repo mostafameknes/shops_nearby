@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}Welcome!
+            {% endblock %}
+        </title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <menu>
+            <ul>
+                <li>
+                    <a class="" href="{{ path('app_home') }}">Nearby Shops</a>
+                </li>
+                {% if app.user!=null %}
+                    <li>
+                        <a class="" href="{{ path('app_preferred') }}">My preferred Shops</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="" href="{{ path('app_login') }}">Log in</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </menu>
+        {% block body %}{% endblock %}
+
+        <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+        {% if app.session.get('latitude') == 0 %}
+            <script>
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    alert("Please accept position detection to show properly the nearby shops");
+                }
+                function showPosition(position) {
+                    $.ajax({
+                        url: '{{ path("app_position") }}',
+                        type: 'POST',
+                        data: {
+                            "latitude": position.coords.latitude,
+                            "longitude": position.coords.longitude
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.alert != 'error') {
+                                alert(data.message);
+                                location.reload();
+                            } else {
+                                alert(data.message);
+                            }
+                        }
+                    });
+                }
+            </script>
+        {% endif %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

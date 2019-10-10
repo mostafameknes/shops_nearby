@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+
+    <div class="col_two_third col_last nobottommargin">
+        <h3>Don't have an Account? Register Now.</h3>
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div class="col_half">
+            <label for="register-form-name">Name :</label>
+            {{ form_widget(form.Name, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.Name) }}
+        </div>
+
+        <div class="col_half col_last">
+            <label for="register-form-email">Email :</label>
+            {{ form_widget(form.email, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.email) }}
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="col_half">
+            <label for="register-form-username">Username :</label>
+            {{ form_widget(form.username, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.username) }}
+        </div>
+
+        <div class="col_half col_last">
+            <label for="register-form-phone">Password :</label>
+            {{ form_widget(form.plainPassword, { 'attr': {'class': 'form-control required'} }) }}
+            {{ form_errors(form.plainPassword) }}
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="clear"></div>
+        <div class="col_full nobottommargin">
+            <button value="register">Register Now</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

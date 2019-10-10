@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Welcome to shops nearby
+{% endblock %}
+
+{% block body %}
+    <h2>These are the Nearby Shops
+    </h2>
+    {% for shop in shops %}
+        <div class="shop" id="shop-{{ shop.id }}">
+            <h5>{{ shop.Name }}</h5>
+            <a href="">
+                <img src="{{ asset('img/shops/' ~ shop.picture) }}" alt="{{ shop.Name }}" class="img-shop">
+            </a>
+            <div class="action">
+                <ul>
+                    <li><a href="#" class="delete"alt="{{ shop.id }}">Remove</a></li>
+                </ul>
+            </div>
+        </div>
+
+    {% else %}
+        <p>There are no shops preference</p>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(".delete").click(function () {
+            var id = $(this).attr("alt");
+            var r = confirm("Are you sure to delete this item from your preference !");
+            if (r == true) {
+                $.ajax({
+                    url: '{{ path("app_delete") }}',
+                    type: 'POST',
+                    data: {
+                        "id": id
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.alert != 'error') {
+                            $('#shop-' + id).hide();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    }
+                });
+            }
+
+        })
+    </script>
+{% endblock %}

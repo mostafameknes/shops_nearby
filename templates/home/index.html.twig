@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Welcome to shops nearby
+{% endblock %}
+
+{% block body %}
+    <h2>These are the Nearby Shops
+    </h2>
+    {% for shop in shops %}
+        {% if (temps-app.session.get('shop-'~shop.id)>7200) %}
+            <div class="shop" id="shop-{{ shop.id }}">
+                <h5>{{ shop.Name }}</h5>
+                <a href="">
+                    <img src="{{ asset('img/shops/' ~ shop.picture) }}" alt="{{ shop.Name }}" class="img-shop">
+                </a>
+                <div class="action">
+                    {% if app.user!=null %}
+                        <ul>
+                            <li>
+                                <a href="#" class="dislike" alt="{{ shop.id }}">Dislike</a>
+                            </li>
+                            <li>
+                                <a href="#" class="like" alt="{{ shop.id }}">Like</a>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <p>
+                            please
+                            <a href="{{ path('app_login') }}">log in</a>
+                            to Like or Dislike a shop
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <p>There are no shops nearby</p>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(".like").click(function () {
+            var id = $(this).attr("alt");
+            $.ajax({
+                url: '{{ path("app_like") }}',
+                type: 'POST',
+                data: {
+                    "id": id
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.alert != 'error') {
+                        $('#shop-' + id).hide();
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+
+        $(".dislike").click(function () {
+            var id = $(this).attr("alt");
+            $.ajax({
+                url: '{{ path("app_dislike") }}',
+                type: 'POST',
+                data: {
+                    "id": id
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.alert != 'error') {
+                        $('#shop-' + id).hide();
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
